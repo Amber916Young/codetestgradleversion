@@ -1,0 +1,78 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codetest.Mapper.SysOrderMapper">
+
+    <insert id="insertOrder" parameterType="com.codetest.Entity.Order" useGeneratedKeys="true" keyProperty="id" >
+        insert into codeTest.order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="totalAmount != null">
+                totalAmount,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="totalAmount != null">
+                #{totalAmount},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertOrder_item">
+        insert into codeTest.order_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="order_id != null">
+                order_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="unitPrice != null">
+                unitPrice,
+            </if>
+            <if test="quantity != null">
+                quantity,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="order_id != null">
+                #{order_id},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="unitPrice != null">
+                #{unitPrice},
+            </if>
+            <if test="quantity != null">
+                #{quantity},
+            </if>
+        </trim>
+    </insert>
+
+
+    <insert id="insertOrder_item_list">
+        insert into codeTest.order_item (
+        order_id,
+        name,
+        unitPrice,
+        quantity
+        )values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.order_id},
+            #{item.name},
+            #{item.unitPrice},
+            #{item.quantity}
+             )
+        </foreach>
+    </insert>
+    <update id="updateOrder">
+        update codeTest.order
+        <set>
+            <if test="totalAmount != null"> totalAmount = #{totalAmount}, </if>
+        </set>
+        where id = #{id}
+
+    </update>
+
+</mapper>
