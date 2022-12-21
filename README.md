@@ -1,5 +1,3 @@
-# codetestgradleversion
-
 # yejiaYang-CodingTest
 
 ## API screenshots
@@ -19,6 +17,86 @@ Two test cases
 ## **Database Design**
 
 [<img src="https://s1.ax1x.com/2022/12/21/zXiNVI.png" alt="zXiNVI.png" style="zoom:50%;" />](https://imgse.com/i/zXiNVI)
+
+## Connect to DB
+
+```yaml
+server:
+  port: 8089
+  session-timeout: 60 # session
+  tomcat:
+    uri-encoding: utf-8 # Setting up tomcat encoding
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/codeTest?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: root
+    password: Yyj188706
+  mvc:
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: classpath:/templates/,classpath:/static/image/,classpath:/static/,classpath:/mapper/
+
+mybatis:
+  mapper-locations: classpath:static/mapper/*.xml # The path where the configuration mapper file is located
+  type-aliases-package: com.codetest.Entity # Configure all class aliases under this package
+```
+
+The server port is 8089, which can be defined by anyone
+
+I have uploaded the SQL file, here is the content:
+
+```mysql
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : yyjblog
+ Source Server Type    : MySQL
+ Source Server Version : 80025
+ Source Host           : localhost:3306
+ Source Schema         : codeTest
+
+ Target Server Type    : MySQL
+ Target Server Version : 80025
+ File Encoding         : 65001
+
+ Date: 21/12/2022 15:10:12
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for order
+-- ----------------------------
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `totalAmount` decimal(10,2) DEFAULT NULL,
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Table structure for order_item
+-- ----------------------------
+DROP TABLE IF EXISTS `order_item`;
+CREATE TABLE `order_item` (
+  `item_id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int DEFAULT NULL,
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `unitPrice` decimal(10,2) DEFAULT '0.00',
+  `quantity` int DEFAULT '0',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modified_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`item_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+```
 
 ## My Logic
 
@@ -79,4 +157,3 @@ for(int i =0;i<jsonArray.length();i++){
 【Gradle】https://github.com/Amber916Young/codetestgradleversion
 
 **if Maven version can not run successfully, please try Gradle version and vice versa.**
-
